@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "total_vulnerabilities": 18,
+    "critical": 0,
+    "high": 5,
+    "medium": 10,
+    "low": 3
+  },
+  "details": [
+    {
+      "id": 1,
+      "file": "config.py",
+      "line_numbers": [1],
+      "original": "DB_FILE=\"inventory.db\"\nREPORT_FILE=\"report.xlsx\"",
+      "updated": "DB_FILE = \"inventory.db\"\nREPORT_FILE = \"report.xlsx\"",
+      "fix_explanation": "E225: Missing whitespace around operator. PEP 8 requires spaces around assignment operators."
+    },
+    {
+      "id": 2,
+      "file": "constants.py",
+      "line_numbers": [1],
+      "original": "MAX_PRODUCTS=1000\nDEFAULT_PRICE=1.0",
+      "updated": "MAX_PRODUCTS = 1000\nDEFAULT_PRICE = 1.0",
+      "fix_explanation": "E225: Missing whitespace around operator. PEP 8 requires spaces around assignment operators."
+    },
+    {
+      "id": 3,
+      "file": "database.py",
+      "line_numbers": [1],
+      "original": "import sqlite3, os",
+      "updated": "import os\nimport sqlite3",
+      "fix_explanation": "E402: Multiple imports on single line and incorrect import order. Each import should be on separate line and alphabetically ordered."
+    },
+    {
+      "id": 4,
+      "file": "database.py",
+      "line_numbers": [1],
+      "original": "import sqlite3, os\nfrom inventory_manager.models import Product",
+      "updated": "import os\nimport sqlite3\n\nfrom inventory_manager.models import Product",
+      "fix_explanation": "E302: Expected 2 blank lines between imports and class definition."
+    },
+    {
+      "id": 5,
+      "file": "database.py",
+      "line_numbers": [4],
+      "original": "class InventoryDB:\n    def __init__(self, db_file):\n        self.conn=sqlite3.connect(db_file)\n        self.cur=self.conn.cursor()",
+      "updated": "class InventoryDB:\n    def __init__(self, db_file):\n        self.conn = sqlite3.connect(db_file)\n        self.cur = self.conn.cursor()",
+      "fix_explanation": "E225: Missing whitespace around assignment operators inside method."
+    },
+    {
+      "id": 6,
+      "file": "database.py",
+      "line_numbers": [8, 9],
+      "original": "    def create_table(self):\n        self.cur.execute(\"CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY,name TEXT, qty INTEGER, price REAL)\")\n        self.conn.commit()",
+      "updated": "    def create_table(self):\n        self.cur.execute(\n            \"CREATE TABLE IF NOT EXISTS products \"\n            \"(id INTEGER PRIMARY KEY, name TEXT, qty INTEGER, price REAL)\"\n        )\n        self.conn.commit()",
+      "fix_explanation": "E501: Line too long (>79 characters). Long lines should be wrapped for readability."
+    },
+    {
+      "id": 7,
+      "file": "database.py",
+      "line_numbers": [10, 11],
+      "original": "    def add_product(self, product:Product):\n        self.cur.execute(\"INSERT INTO products (id,name,qty,price) VALUES (?,?,?,?)\",\n                         (product.id, product.name, product.qty, product.price))",
+      "updated": "    def add_product(self, product: Product):\n        self.cur.execute(\n            \"INSERT INTO products (id, name, qty, price) VALUES (?, ?, ?, ?)\",\n            (product.id, product.name, product.qty, product.price),\n        )",
+      "fix_explanation": "E225: Missing whitespace after colon in type hint. E501: Long lines should be wrapped. SQL formatting improved."
+    },
+    {
+      "id": 8,
+      "file": "database.py",
+      "line_numbers": [12],
+      "original": "        rows=self.cur.fetchall()",
+      "updated": "        rows = self.cur.fetchall()",
+      "fix_explanation": "E225: Missing whitespace around assignment operator."
+    },
+    {
+      "id": 9,
+      "file": "database.py",
+      "line_numbers": [12],
+      "original": "    def get_all_products(self):\n        self.cur.execute(\"SELECT id,name,qty,price FROM products\")\n        rows=self.cur.fetchall()\n        return [Product(*r) for r in rows]",
+      "updated": "    def get_all_products(self):\n        self.cur.execute(\"SELECT id, name, qty, price FROM products\")\n        rows = self.cur.fetchall()\n        return [Product(*r) for r in rows]",
+      "fix_explanation": "E225: Missing whitespace in SQL statement after commas and in assignment."
+    },
+    {
+      "id": 10,
+      "file": "models.py",
+      "line_numbers": [7],
+      "original": "    def __str__(self): return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "updated": "    def __str__(self):\n        return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "fix_explanation": "E701: Multiple statements on one line (colon). Method body should be on new line."
+    },
+    {
+      "id": 11,
+      "file": "report.py",
+      "line_numbers": [2],
+      "original": "def export_report(products, filename): \n    df=pd.DataFrame([{'id':p.id,'name':p.name,'qty':p.qty,'price':p.price} for p in products])",
+      "updated": "def export_report(products, filename):\n    df = pd.DataFrame(\n        [{'id': p.id, 'name': p.name, 'qty': p.qty, 'price': p.price} for p in products]\n    )",
+      "fix_explanation": "W391: Trailing whitespace on line. E225: Missing whitespace around operators. E501: Long lines."
+    },
+    {
+      "id": 12,
+      "file": "report.py",
+      "line_numbers": [3],
+      "original": "    df.to_excel(filename,index=False)",
+      "updated": "    df.to_excel(filename, index=False)",
+      "fix_explanation": "E225: Missing whitespace after comma in function call."
+    },
+    {
+      "id": 13,
+      "file": "utils.py",
+      "line_numbers": [1],
+      "original": "def calculateTotal(products):\n    total_qty=0\n    total_value=0",
+      "updated": "def calculate_total(products):\n    total_qty = 0\n    total_value = 0",
+      "fix_explanation": "E225: Missing whitespace around operators. Function name should be snake_case (N802)."
+    },
+    {
+      "id": 14,
+      "file": "utils.py",
+      "line_numbers": [4, 5],
+      "original": "    for p in products:\n        total_qty += p.qty\n        total_value += p.qty*p.price",
+      "updated": "    for p in products:\n        total_qty += p.qty\n        total_value += p.qty * p.price",
+      "fix_explanation": "E225: Missing whitespace around operator (multiplication)."
+    },
+    {
+      "id": 15,
+      "file": "main.py",
+      "line_numbers": [7],
+      "original": "    db=InventoryDB(\"inventory.db\")",
+      "updated": "    db = InventoryDB(\"inventory.db\")",
+      "fix_explanation": "E225: Missing whitespace around assignment operator."
+    },
+    {
+      "id": 16,
+      "file": "main.py",
+      "line_numbers": [8],
+      "original": "    db.create_table()\n    products=[\n        Product(1,\"Apple\",100,0.5),\n        Product(2,\"Banana\",200,0.3),\n        Product(3,\"Orange\",150,0.4)\n    ]",
+      "updated": "    db.create_table()\n    products = [\n        Product(1, \"Apple\", 100, 0.5),\n        Product(2, \"Banana\", 200, 0.3),\n        Product(3, \"Orange\", 150, 0.4),\n    ]",
+      "fix_explanation": "E225: Missing whitespace around operators and after commas. E231: Missing whitespace after comma."
+    },
+    {
+      "id": 17,
+      "file": "main.py",
+      "line_numbers": [14, 15],
+      "original": "    all_products=db.get_all_products()\n    total_qty,total_value=calculateTotal(all_products)",
+      "updated": "    all_products = db.get_all_products()\n    total_qty, total_value = calculate_total(all_products)",
+      "fix_explanation": "E225: Missing whitespace around operators. E231: Missing whitespace after comma. Updated function name to match snake_case convention."
+    },
+    {
+      "id": 18,
+      "file": "main.py",
+      "line_numbers": [16, 17],
+      "original": "    print(\"Total quantity:\",total_qty,\"Total value:\",total_value)\n    export_report(all_products,\"report.xlsx\")",
+      "updated": "    print(\"Total quantity:\", total_qty, \"Total value:\", total_value)\n    export_report(all_products, \"report.xlsx\")",
+      "fix_explanation": "E231: Missing whitespace after comma in print statement and function call."
+    }
+  ]
+}
