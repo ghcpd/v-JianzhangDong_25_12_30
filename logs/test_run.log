@@ -1,0 +1,12 @@
+=== TEST RUN START: 2025-12-30T06:03:51.859690Z (env=windows) ===
+ERROR: Could not install packages due to an OSError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\python\\Lib\\site-packages\\openpyxl\\cell\\text.py'
+Consider using the `--user` option or check the permissions.
+
+'flake8' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+....                                                                     [100%]
+4 passed in 3.98s
+
+TEST PASSED: 2025-12-30T06:04:08.117722Z
+=== END ===
+
