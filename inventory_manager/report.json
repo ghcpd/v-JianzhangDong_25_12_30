@@ -1,0 +1,291 @@
+{
+  "summary": {
+    "total_vulnerabilities": 37,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 37
+  },
+  "details": [
+    {
+      "id": 1,
+      "file": "config.py",
+      "line_numbers": [1],
+      "original": "DB_FILE=\"inventory.db\"",
+      "updated": "DB_FILE = \"inventory.db\"",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 2,
+      "file": "config.py",
+      "line_numbers": [2],
+      "original": "REPORT_FILE=\"report.xlsx\"",
+      "updated": "REPORT_FILE = \"report.xlsx\"",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 3,
+      "file": "constants.py",
+      "line_numbers": [1],
+      "original": "MAX_PRODUCTS=1000",
+      "updated": "MAX_PRODUCTS = 1000",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 4,
+      "file": "constants.py",
+      "line_numbers": [2],
+      "original": "DEFAULT_PRICE=1.0",
+      "updated": "DEFAULT_PRICE = 1.0",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 5,
+      "file": "database.py",
+      "line_numbers": [1],
+      "original": "import sqlite3, os",
+      "updated": "import sqlite3",
+      "fix_explanation": "Remove unused import 'os'"
+    },
+    {
+      "id": 6,
+      "file": "database.py",
+      "line_numbers": [1],
+      "original": "import sqlite3, os",
+      "updated": "import sqlite3\nfrom inventory_manager.models import Product",
+      "fix_explanation": "Separate multiple imports on different lines"
+    },
+    {
+      "id": 7,
+      "file": "database.py",
+      "line_numbers": [3],
+      "original": "from inventory_manager.models import Product\n\nclass InventoryDB:",
+      "updated": "from inventory_manager.models import Product\n\n\nclass InventoryDB:",
+      "fix_explanation": "Add 2 blank lines before top-level class"
+    },
+    {
+      "id": 8,
+      "file": "database.py",
+      "line_numbers": [6],
+      "original": "        self.conn=sqlite3.connect(db_file)",
+      "updated": "        self.conn = sqlite3.connect(db_file)",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 9,
+      "file": "database.py",
+      "line_numbers": [7],
+      "original": "        self.cur=self.conn.cursor()",
+      "updated": "        self.cur = self.conn.cursor()",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 10,
+      "file": "database.py",
+      "line_numbers": [8],
+      "original": "        self.cur = self.conn.cursor()\n    def create_table(self):",
+      "updated": "        self.cur = self.conn.cursor()\n\n    def create_table(self):",
+      "fix_explanation": "Add 1 blank line before method"
+    },
+    {
+      "id": 11,
+      "file": "database.py",
+      "line_numbers": [10],
+      "original": "        self.cur.execute(\"CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY,name TEXT, qty INTEGER, price REAL)\")",
+      "updated": "        self.cur.execute(\n            \"CREATE TABLE IF NOT EXISTS products \"\n            \"(id INTEGER PRIMARY KEY, name TEXT, qty INTEGER, price REAL)\"\n        )",
+      "fix_explanation": "Break long line and add whitespace in SQL"
+    },
+    {
+      "id": 12,
+      "file": "database.py",
+      "line_numbers": [14],
+      "original": "        self.conn.commit()\n    def add_product(self, product:Product):",
+      "updated": "        self.conn.commit()\n\n    def add_product(self, product: Product):",
+      "fix_explanation": "Add 1 blank line before method and whitespace after :"
+    },
+    {
+      "id": 13,
+      "file": "database.py",
+      "line_numbers": [16],
+      "original": "        self.cur.execute(\"INSERT INTO products (id,name,qty,price) VALUES (?,?,?,?)\",\n                         (product.id, product.name, product.qty, product.price))",
+      "updated": "        self.cur.execute(\n            \"INSERT INTO products (id, name, qty, price) VALUES (?, ?, ?, ?)\",\n            (product.id, product.name, product.qty, product.price)\n        )",
+      "fix_explanation": "Break long line and add whitespace in SQL"
+    },
+    {
+      "id": 14,
+      "file": "database.py",
+      "line_numbers": [21],
+      "original": "        self.conn.commit()\n    def get_all_products(self):",
+      "updated": "        self.conn.commit()\n\n    def get_all_products(self):",
+      "fix_explanation": "Add 1 blank line before method"
+    },
+    {
+      "id": 15,
+      "file": "database.py",
+      "line_numbers": [24],
+      "original": "        rows=self.cur.fetchall()",
+      "updated": "        rows = self.cur.fetchall()",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 16,
+      "file": "main.py",
+      "line_numbers": [4],
+      "original": "from inventory_manager.report import export_report\n\ndef main():",
+      "updated": "from inventory_manager.report import export_report\n\n\ndef main():",
+      "fix_explanation": "Add 2 blank lines before top-level function"
+    },
+    {
+      "id": 17,
+      "file": "main.py",
+      "line_numbers": [7],
+      "original": "    db=InventoryDB(\"inventory.db\")",
+      "updated": "    db = InventoryDB(\"inventory.db\")",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 18,
+      "file": "main.py",
+      "line_numbers": [9],
+      "original": "    products=[",
+      "updated": "    products = [",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 19,
+      "file": "main.py",
+      "line_numbers": [10],
+      "original": "        Product(1,\"Apple\",100,0.5),",
+      "updated": "        Product(1, \"Apple\", 100, 0.5),",
+      "fix_explanation": "Add whitespace after commas"
+    },
+    {
+      "id": 20,
+      "file": "main.py",
+      "line_numbers": [11],
+      "original": "        Product(2,\"Banana\",200,0.3),",
+      "updated": "        Product(2, \"Banana\", 200, 0.3),",
+      "fix_explanation": "Add whitespace after commas"
+    },
+    {
+      "id": 21,
+      "file": "main.py",
+      "line_numbers": [12],
+      "original": "        Product(3,\"Orange\",150,0.4)",
+      "updated": "        Product(3, \"Orange\", 150, 0.4)",
+      "fix_explanation": "Add whitespace after commas"
+    },
+    {
+      "id": 22,
+      "file": "main.py",
+      "line_numbers": [16],
+      "original": "    all_products=db.get_all_products()",
+      "updated": "    all_products = db.get_all_products()",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 23,
+      "file": "main.py",
+      "line_numbers": [17],
+      "original": "    total_qty,total_value=calculateTotal(all_products)",
+      "updated": "    total_qty, total_value = calculate_total(all_products)",
+      "fix_explanation": "Add whitespace around operators and change function name to snake_case"
+    },
+    {
+      "id": 24,
+      "file": "main.py",
+      "line_numbers": [18],
+      "original": "    print(\"Total quantity:\",total_qty,\"Total value:\",total_value)",
+      "updated": "    print(\"Total quantity:\", total_qty, \"Total value:\", total_value)",
+      "fix_explanation": "Add whitespace after commas"
+    },
+    {
+      "id": 25,
+      "file": "main.py",
+      "line_numbers": [19],
+      "original": "    export_report(all_products,\"report.xlsx\")",
+      "updated": "    export_report(all_products, \"report.xlsx\")",
+      "fix_explanation": "Add whitespace after comma"
+    },
+    {
+      "id": 26,
+      "file": "main.py",
+      "line_numbers": [20],
+      "original": "    export_report(all_products, \"report.xlsx\")\n\nif __name__==\"__main__\":",
+      "updated": "    export_report(all_products, \"report.xlsx\")\n\n\nif __name__ == \"__main__\":",
+      "fix_explanation": "Add 2 blank lines after function and whitespace around operators"
+    },
+    {
+      "id": 27,
+      "file": "main.py",
+      "line_numbers": [23],
+      "original": "if __name__==\"__main__\":",
+      "updated": "if __name__ == \"__main__\":",
+      "fix_explanation": "Add whitespace around operators"
+    },
+    {
+      "id": 28,
+      "file": "models.py",
+      "line_numbers": [6],
+      "original": "        self.price = price\n    def __str__(self): return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "updated": "        self.price = price\n\n    def __str__(self):\n        return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "fix_explanation": "Add 1 blank line before method and split long line"
+    },
+    {
+      "id": 29,
+      "file": "report.py",
+      "line_numbers": [1],
+      "original": "import pandas as pd\ndef export_report(products, filename): ",
+      "updated": "import pandas as pd\n\n\ndef export_report(products, filename):",
+      "fix_explanation": "Add 2 blank lines before top-level function and remove trailing whitespace"
+    },
+    {
+      "id": 30,
+      "file": "report.py",
+      "line_numbers": [4],
+      "original": "    df=pd.DataFrame([{'id':p.id,'name':p.name,'qty':p.qty,'price':p.price} for p in products])",
+      "updated": "    df = pd.DataFrame([\n        {'id': p.id, 'name': p.name, 'qty': p.qty, 'price': p.price}\n        for p in products\n    ])",
+      "fix_explanation": "Add whitespace around operators and break long line"
+    },
+    {
+      "id": 31,
+      "file": "report.py",
+      "line_numbers": [8],
+      "original": "    df.to_excel(filename,index=False)",
+      "updated": "    df.to_excel(filename, index=False)",
+      "fix_explanation": "Add whitespace after comma"
+    },
+    {
+      "id": 32,
+      "file": "utils.py",
+      "line_numbers": [1],
+      "original": "def calculateTotal(products):",
+      "updated": "def calculate_total(products):",
+      "fix_explanation": "Change function name to snake_case"
+    },
+    {
+      "id": 33,
+      "file": "utils.py",
+      "line_numbers": [2],
+      "original": "    total_qty=0",
+      "updated": "    total_qty = 0",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 34,
+      "file": "utils.py",
+      "line_numbers": [3],
+      "original": "    total_value=0",
+      "updated": "    total_value = 0",
+      "fix_explanation": "Add whitespace around operator ="
+    },
+    {
+      "id": 35,
+      "file": "utils.py",
+      "line_numbers": [6],
+      "original": "        total_value += p.qty*p.price",
+      "updated": "        total_value += p.qty * p.price",
+      "fix_explanation": "Add whitespace around operator *"
+    }
+  ]
+}

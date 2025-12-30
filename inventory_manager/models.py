@@ -4,4 +4,6 @@ class Product:
         self.name = name
         self.qty = qty
         self.price = price
-    def __str__(self): return f"Product({self.id}, {self.name}, {self.qty}, {self.price})"
+
+    def __str__(self):
+        return f"Product({self.id}, {self.name}, {self.qty}, {self.price})"

@@ -1,0 +1,22 @@
+2025-12-30T15:46:44.170562 - Starting test for Windows
+Running style checks...
+Requirement already satisfied: flake8 in d:\python\lib\site-packages (7.3.0)
+Requirement already satisfied: mccabe<0.8.0,>=0.7.0 in d:\python\lib\site-packages (from flake8) (0.7.0)
+Requirement already satisfied: pycodestyle<2.15.0,>=2.14.0 in d:\python\lib\site-packages (from flake8) (2.14.0)
+Requirement already satisfied: pyflakes<3.5.0,>=3.4.0 in d:\python\lib\site-packages (from flake8) (3.4.0)
+.\auto_test.py:8:1: E302 expected 2 blank lines, found 1
+.\auto_test.py:18:9: E722 do not use bare 'except'
+.\auto_test.py:26:1: E302 expected 2 blank lines, found 1
+.\auto_test.py:45:89: E501 line too long (99 > 88 characters)
+.\auto_test.py:64:1: E305 expected 2 blank lines after class or function definition, found 1
+.\auto_test.py:71:29: W292 no newline at end of file
+Style checks failed.
+TEST FAILED
+2025-12-30T15:47:43.534811 - Starting test for Windows
+Running style checks...
+Requirement already satisfied: flake8 in d:\python\lib\site-packages (7.3.0)
+Requirement already satisfied: mccabe<0.8.0,>=0.7.0 in d:\python\lib\site-packages (from flake8) (0.7.0)
+Requirement already satisfied: pycodestyle<2.15.0,>=2.14.0 in d:\python\lib\site-packages (from flake8) (2.14.0)
+Requirement already satisfied: pyflakes<3.5.0,>=3.4.0 in d:\python\lib\site-packages (from flake8) (3.4.0)
+All style checks passed.
+TEST PASSED
