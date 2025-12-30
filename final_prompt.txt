@@ -1,0 +1,304 @@
+You are an experienced software engineer with good coding practices. Your task is to identify all code style and linting issues present in the files within the current workspace, fix them, generate comprehensive testing infrastructure, and validate all fixes through automated testing.
+
+## Role & Objective
+
+Act as a senior software engineer responsible for conducting a complete code quality audit and remediation. You will analyze all Python files in the workspace, identify style/linting violations according to PEP8 and common linting standards (flake8), fix all identified issues, create cross-platform testing infrastructure, and verify that all fixes are correct through automated tests.
+
+## Step-by-Step Instructions
+
+### 1. Scan and Identify Code Style/Linting Issues
+
+Examine all Python files in the workspace and identify violations including but not limited to:
+- Naming convention violations (camelCase vs snake_case for functions/variables)
+- Improper spacing around operators and after commas
+- Lines exceeding 79 characters (PEP8 standard)
+- Unused imports
+- Bare except clauses
+- Use of print() statements instead of logging
+- Missing or inadequate docstrings
+- Shadowing of built-in names
+- Deprecated API usage
+- Missing resource cleanup methods
+
+### 2. Generate report.json
+
+Create a structured JSON file named `report.json` with all identified issues using this exact format:
+
+```json
+{
+  "summary": {
+    "total_vulnerabilities": <integer>,
+    "critical": <integer>,
+    "high": <integer>,
+    "medium": <integer>,
+    "low": <integer>
+  },
+  "details": [
+    {
+      "id": <integer>,
+      "file": "<relative_path_to_file>",
+      "line_numbers": [<list of integers>],
+      "original": "<exact original code snippet>",
+      "updated": "<exact fixed code snippet>",
+      "fix_explanation": "<clear explanation of what was fixed and why>"
+    }
+  ]
+}
+```
+
+Severity classification:
+- Critical: Security vulnerabilities or runtime errors
+- High: Major logic flaws or severe style violations
+- Medium: Moderate style issues affecting readability/maintainability
+- Low: Minor cosmetic issues
+
+### 3. Fix All Code Style/Linting Issues
+
+Apply all fixes identified in step 1 directly to the source files:
+- Rename functions/variables to follow snake_case convention
+- Fix all spacing and indentation issues
+- Break long lines appropriately
+- Remove unused imports
+- Replace bare except with specific exception handling
+- Replace print() statements with proper logging
+- Add comprehensive docstrings to modules, classes, and functions
+- Rename parameters that shadow built-ins
+- Update deprecated API calls
+- Add resource cleanup methods where needed
+- Update all call sites when renaming functions
+
+### 4. Generate Environment Replication Scripts
+
+Create the following files to enable cross-platform environment setup and testing:
+
+**requirements.txt** - List all Python dependencies with versions:
+- pytest
+- flake8
+- Any project-specific dependencies
+
+**Dockerfile** - Complete Docker container definition:
+- Use appropriate Python base image
+- Copy all necessary files
+- Install dependencies from requirements.txt
+- Set working directory
+- Include commands to run tests
+
+**setup.sh** (Linux/macOS) - Bash script to:
+- Create Python virtual environment (.venv)
+- Activate the virtual environment
+- Install all dependencies from requirements.txt
+- Make executable with proper shebang
+
+**run_test.sh** (Linux/macOS) - Bash script to:
+- Run pytest with appropriate flags
+- Exit with proper exit code
+- Make executable with proper shebang
+
+**run_test.bat** (Windows) - Batch script to:
+- Run pytest with appropriate flags
+- Exit with proper exit code
+
+### 5. Implement Automated Test Infrastructure
+
+**tests/test_lint.py** - Create a pytest test that:
+- Runs flake8 against all Python files in the main module(s)
+- Fails if any linting issues are found
+- Uses pytest's built-in assertion mechanisms
+
+**auto_test.py** - Create a cross-platform test runner that:
+- Detects the current operating system (Windows, Linux, macOS, or Docker)
+- Executes the appropriate test script:
+  - `run_test.sh` for Linux/macOS
+  - `run_test.bat` for Windows
+  - Direct pytest execution in Docker
+- Captures all output from the test execution
+- Creates the `logs/` directory if it doesn't exist
+- Appends timestamped test results to `logs/test_run.log`
+- Each log entry must include:
+  - ISO 8601 timestamp with timezone
+  - Complete test output
+  - Final status line: exactly "TEST PASSED" or "TEST FAILED"
+- Returns appropriate exit code based on test results (0 for pass, non-zero for fail)
+- Uses subprocess module for command execution
+- Properly handles test script exit codes to determine pass/fail status
+
+### 6. Generate README.md Documentation
+
+Create comprehensive `README.md` with the following sections:
+
+**Overview** - Brief description of the project and the code quality improvements made
+
+**Files Generated** - Complete list with descriptions:
+- report.json - Structured listing of all identified and fixed issues
+- requirements.txt - Python dependencies
+- Dockerfile - Container definition
+- setup.sh - Linux/macOS environment setup
+- run_test.sh - Linux/macOS test runner
+- run_test.bat - Windows test runner
+- auto_test.py - Cross-platform automated test executor
+- tests/test_lint.py - Linting validation test
+
+**Environment Setup Instructions**:
+
+For Linux/macOS:
+```bash
+chmod +x setup.sh
+./setup.sh
+source .venv/bin/activate
+```
+
+For Windows:
+```cmd
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+For Docker:
+```bash
+docker build -t <project-name> .
+docker run <project-name>
+```
+
+**Running Tests**:
+
+Manual execution:
+- Linux/macOS: `./run_test.sh`
+- Windows: `run_test.bat`
+
+Automated cross-platform execution:
+```bash
+python auto_test.py
+```
+
+**Checking Test Results**:
+- Review `logs/test_run.log` for detailed output
+- Look for the final status line: "TEST PASSED" or "TEST FAILED"
+- Each test run is timestamped for tracking
+
+**Code Quality Summary** - Brief overview of the types of issues fixed and overall improvements made
+
+### 7. Execute Automated Tests
+
+Run the `auto_test.py` script to validate that all code style and linting issues have been successfully resolved:
+- Execute: `python auto_test.py`
+- Verify that the test passes and logs show "TEST PASSED"
+- If tests fail, review the log output, address any remaining issues, and re-run
+
+### 8. Final Verification
+
+Confirm that all deliverables are complete:
+- ✓ All code style/linting issues identified and documented in report.json
+- ✓ All issues fixed in source files
+- ✓ report.json created with correct structure
+- ✓ requirements.txt, Dockerfile, setup.sh created
+- ✓ run_test.sh (Linux/macOS) and run_test.bat (Windows) created
+- ✓ auto_test.py implemented and functional
+- ✓ tests/test_lint.py created
+- ✓ README.md generated with complete documentation
+- ✓ logs/ directory created with .gitkeep or test_run.log
+- ✓ Automated tests executed successfully
+- ✓ logs/test_run.log contains timestamped results with "TEST PASSED" status
+
+## Output Specification
+
+### Files to Create/Modify:
+
+1. **report.json** (new file, root directory)
+   - JSON format as specified above
+   - All issues with severity, file, lines, original/updated code, explanations
+
+2. **Source files** (modify in place)
+   - All Python files with identified issues
+   - Apply fixes directly without creating backups
+
+3. **requirements.txt** (new file, root directory)
+   - One dependency per line with version pins where appropriate
+
+4. **Dockerfile** (new file, root directory)
+   - Complete and functional Docker configuration
+
+5. **setup.sh** (new file, root directory)
+   - Executable bash script for Linux/macOS setup
+   - Include proper shebang: `#!/bin/bash`
+
+6. **run_test.sh** (new file, root directory)
+   - Executable bash script to run tests on Linux/macOS
+   - Include proper shebang: `#!/bin/bash`
+
+7. **run_test.bat** (new file, root directory)
+   - Windows batch script to run tests
+
+8. **auto_test.py** (new file, root directory)
+   - Cross-platform Python script as specified
+
+9. **tests/test_lint.py** (new file, tests/ directory)
+   - Pytest-compatible test file
+
+10. **logs/test_run.log** (new file, logs/ directory)
+    - Created by auto_test.py execution
+    - Contains timestamped test results
+
+11. **README.md** (new file, root directory)
+    - Markdown format with all sections specified above
+
+## Constraints & Preferences
+
+- **Language**: Python 3.7+
+- **Linting Standard**: PEP8, enforced via flake8
+- **Test Framework**: pytest
+- **Line Length**: Maximum 79 characters (PEP8)
+- **Naming Convention**: snake_case for functions and variables, PascalCase for classes
+- **Documentation**: Docstrings for all public modules, classes, and functions
+- **Logging**: Use Python's logging module instead of print statements
+- **Error Handling**: Specific exception types, avoid bare except clauses
+- **Timestamps**: ISO 8601 format with timezone information
+- **Exit Codes**: 0 for success, non-zero for failure in all scripts
+- **File Encoding**: UTF-8 for all text files
+- **Line Endings**: LF for shell scripts, appropriate platform defaults for others
+
+## Quality Gates
+
+Before completion, verify:
+
+1. **Completeness Check**:
+   - All required files exist and contain appropriate content
+   - No placeholder or incomplete implementations
+   - All source files have been processed
+
+2. **Linting Validation**:
+   - Execute flake8 against all Python files
+   - Zero linting errors reported
+   - All tests in tests/test_lint.py pass
+
+3. **Cross-Platform Compatibility**:
+   - Bash scripts have proper shebangs and are executable
+   - Windows batch file uses correct syntax
+   - auto_test.py correctly detects and handles all target platforms
+
+4. **Test Execution**:
+   - auto_test.py runs successfully
+   - Test results logged to logs/test_run.log
+   - Log contains timestamp and "TEST PASSED" status
+   - Exit code is 0
+
+5. **Documentation Accuracy**:
+   - README.md instructions are complete and accurate
+   - All file paths and commands are correct
+   - Examples can be executed as written
+
+6. **Report Accuracy**:
+   - report.json matches actual fixes applied
+   - All fixed issues are documented
+   - Original and updated code snippets are exact
+
+## Critical Execution Notes
+
+- Work systematically through each step without skipping
+- Apply all fixes before running validation tests
+- Ensure auto_test.py properly captures and determines test outcomes
+- The final log entry must conclusively show either "TEST PASSED" or "TEST FAILED"
+- All scripts must be functional and executable in their target environments
+- Complete all tasks in a single execution without requiring follow-up interactions
+- If any step encounters issues, resolve them immediately before proceeding
+- Do not prompt for confirmations; make reasonable decisions and execute fully

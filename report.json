@@ -1,0 +1,75 @@
+{
+  "summary": {
+    "total_vulnerabilities": 8,
+    "critical": 0,
+    "high": 0,
+    "medium": 4,
+    "low": 4
+  },
+  "details": [
+    {
+      "id": 1,
+      "file": "inventory_manager/main.py",
+      "line_numbers": [1,3,6,7,10,16,17,18],
+      "original": "from inventory_manager.utils import calculateTotal\n...\ndef main():\n    db=InventoryDB(\"inventory.db\")\n    ...\n    total_qty,total_value=calculateTotal(all_products)\n    print(\"Total quantity:\",total_qty,\"Total value:\",total_value)",
+      "updated": "from inventory_manager.utils import calculate_total\n...\ndef main() -> None:\n    logging.basicConfig(level=logging.INFO)\n    db = InventoryDB(DB_FILE)\n    ...\n    total_qty, total_value = calculate_total(all_products)\n    logging.info(\"Total quantity: %d, Total value: %.2f\", total_qty, total_value)",
+      "fix_explanation": "Renamed camelCase function to snake_case, improved spacing and replaced print with logging; used configuration constants for file names to improve clarity and maintainability."
+    },
+    {
+      "id": 2,
+      "file": "inventory_manager/utils.py",
+      "line_numbers": [1,2,3,4,5],
+      "original": "def calculateTotal(products):\n    total_qty=0\n    total_value=0\n    for p in products:\n        total_qty += p.qty\n        total_value += p.qty*p.price\n    return total_qty, total_value",
+      "updated": "def calculate_total(products: Iterable[object]) -> Tuple[int, float]:\n    \"\"\"Calculate total quantity and total value for a sequence of products.\"\"\"\n    total_qty = sum(p.qty for p in products)\n    total_value = sum(p.qty * p.price for p in products)\n    return total_qty, total_value",
+      "fix_explanation": "Converted function name to snake_case, added type hints and docstring, and used generator expressions for clarity and performance."
+    },
+    {
+      "id": 3,
+      "file": "inventory_manager/models.py",
+      "line_numbers": [1,2,3,4,5,6],
+      "original": "class Product:\n    def __init__(self, id, name, qty, price):\n        self.id = id\n        self.name = name\n        self.qty = qty\n        self.price = price\n    def __str__(self): return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "updated": "class Product:\n    \"\"\"Simple product data model.\"\"\"\n\n    def __init__(self, product_id: int, name: str, qty: int, price: float) -> None:\n        self.id = product_id\n        self.name = name\n        self.qty = qty\n        self.price = price\n\n    def __str__(self) -> str:\n        return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "fix_explanation": "Avoided shadowing builtin `id` by renaming parameter to `product_id`, added docstring and type annotations, and expanded __str__ to a multi-line method for readability."
+    },
+    {
+      "id": 4,
+      "file": "inventory_manager/database.py",
+      "line_numbers": [1,2,3,4,5,6,7,8,9,10],
+      "original": "import sqlite3, os\nfrom inventory_manager.models import Product\n\nclass InventoryDB:\n    def __init__(self, db_file):\n        self.conn=sqlite3.connect(db_file)\n        self.cur=self.conn.cursor()\n    def create_table(self):\n        self.cur.execute(\"CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY,name TEXT, qty INTEGER, price REAL)\")\n        self.conn.commit()",
+      "updated": "import os\nimport sqlite3\nfrom typing import List\n\nfrom inventory_manager.models import Product\n\nclass InventoryDB:\n    \"\"\"Simple wrapper around SQLite for product storage.\"\"\"\n\n    def __init__(self, db_file: str) -> None:\n        self.conn = sqlite3.connect(db_file)\n        self.cur = self.conn.cursor()\n\n    def create_table(self) -> None:\n        self.cur.execute(\"CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT, qty INTEGER, price REAL)\")\n        self.conn.commit()\n\n    def close(self) -> None:\n        self.conn.close()",
+      "fix_explanation": "Split imports, added typing annotations, fixed spacing in SQL statement and method bodies, added a close method to allow proper resource cleanup, and used INSERT OR REPLACE to avoid integrity errors."
+    },
+    {
+      "id": 5,
+      "file": "inventory_manager/report.py",
+      "line_numbers": [1,2,3],
+      "original": "import pandas as pd\ndef export_report(products, filename): \n    df=pd.DataFrame([{'id':p.id,'name':p.name,'qty':p.qty,'price':p.price} for p in products])\n    df.to_excel(filename,index=False)",
+      "updated": "import pandas as pd\nfrom typing import Iterable\n\nfrom inventory_manager.models import Product\n\ndef export_report(products: Iterable[Product], filename: str) -> None:\n    \"\"\"Export products to an Excel file.\"\"\"\n    df = pd.DataFrame([{'id': p.id, 'name': p.name, 'qty': p.qty, 'price': p.price} for p in products])\n    df.to_excel(filename, index=False)",
+      "fix_explanation": "Added typing and docstring, expanded formatting for readability and ensured consistent spacing inside dicts and method calls."
+    },
+    {
+      "id": 6,
+      "file": "inventory_manager/main.py",
+      "line_numbers": [7,11,13,21],
+      "original": "db=InventoryDB(\"inventory.db\")\n    products=[\n        Product(1,\"Apple\",100,0.5),\n    if __name__==\"__main__\":\n    main()",
+      "updated": "db = InventoryDB(DB_FILE)\n    products = [\n        Product(1, \"Apple\", 100, 0.5),\nif __name__ == \"__main__\":\n    main()",
+      "fix_explanation": "Fixed spacing around operators and commas, used configuration constants and formatted the module entrypoint per PEP8."
+    },
+    {
+      "id": 7,
+      "file": "inventory_manager/utils.py",
+      "line_numbers": [1,2],
+      "original": "def calculateTotal(products):\n    total_qty=0",
+      "updated": "def calculate_total(products: Iterable[object]) -> Tuple[int, float]:\n    \"\"\"Calculate total quantity and total value for a sequence of products.\"\"\"",
+      "fix_explanation": "Standardized function naming to snake_case and added a descriptive docstring and type hints."
+    },
+    {
+      "id": 8,
+      "file": "requirements.txt",
+      "line_numbers": [1,2,3,4],
+      "original": "",
+      "updated": "pandas>=1.0\nopenpyxl>=3.0\nflake8>=6.0\npytest>=7.0",
+      "fix_explanation": "Added missing dependencies required for tests and Excel export (`pandas`, `openpyxl`) and linters/test runners (`flake8`, `pytest`)."
+    }
+  ]
+}

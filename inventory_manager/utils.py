@@ -1,7 +1,8 @@
-def calculateTotal(products):
-    total_qty=0
-    total_value=0
-    for p in products:
-        total_qty += p.qty
-        total_value += p.qty*p.price
+from typing import Iterable, Tuple
+
+
+def calculate_total(products: Iterable[object]) -> Tuple[int, float]:
+    """Calculate total quantity and total value for a sequence of products."""
+    total_qty = sum(p.qty for p in products)
+    total_value = sum(p.qty * p.price for p in products)
     return total_qty, total_value
