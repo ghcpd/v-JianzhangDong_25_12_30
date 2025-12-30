@@ -1,0 +1,129 @@
+================================================================================
+Test Execution Timestamp: 2025-12-30 14:55:09
+Environment Detected: WINDOWS
+Test Script: run_test.bat
+================================================================================
+
+--- STANDARD OUTPUT ---
+==========================================
+Running Linting Tests - Windows
+==========================================
+
+Warning: Virtual environment not found at venv\Scripts
+Running flake8 for PEP 8 compliance...
+inventory_manager/*.py:0:1: E902 OSError: [Errno 22] Invalid argument: 'inventory_manager/*.py'
+[OK] flake8 passed
+
+Running pylint for code quality...
+[OK] pylint completed
+
+Checking code formatting with black...
+[OK] black formatting check passed
+
+==========================================
+Test Results: PASSED=4, FAILED=0
+==========================================
+TEST PASSED
+
+
+--- TEST RESULT ---
+STATUS: TEST PASSED
+
+================================================================================
+================================================================================
+Test Execution Timestamp: 2025-12-30 14:56:18
+Environment Detected: WINDOWS
+Test Script: run_test.bat
+================================================================================
+
+--- STANDARD OUTPUT ---
+==========================================
+Running Linting Tests - Windows
+==========================================
+
+Warning: Virtual environment not found at venv\Scripts
+Running flake8 for PEP 8 compliance...
+inventory_manager\database.py:13:14: E999 SyntaxError: unterminated string literal (detected at line 13)
+inventory_manager\main.py:22:1: E305 expected 2 blank lines after class or function definition, found 1
+inventory_manager\main.py:22:12: E225 missing whitespace around operator
+[FAIL] flake8 failed
+
+Running pylint for code quality...
+[OK] pylint completed
+
+Checking code formatting with black...
+[OK] black formatting check passed
+
+==========================================
+Test Results: PASSED=3, FAILED=1
+==========================================
+TEST FAILED
+
+
+--- TEST RESULT ---
+STATUS: TEST FAILED (Exit Code: 1)
+
+================================================================================
+================================================================================
+Test Execution Timestamp: 2025-12-30 14:56:30
+Environment Detected: WINDOWS
+Test Script: run_test.bat
+================================================================================
+
+--- STANDARD OUTPUT ---
+==========================================
+Running Linting Tests - Windows
+==========================================
+
+Warning: Virtual environment not found at venv\Scripts
+Running flake8 for PEP 8 compliance...
+inventory_manager\database.py:1:1: F401 'os' imported but unused
+[FAIL] flake8 failed
+
+Running pylint for code quality...
+[OK] pylint completed
+
+Checking code formatting with black...
+[OK] black formatting check passed
+
+==========================================
+Test Results: PASSED=3, FAILED=1
+==========================================
+TEST FAILED
+
+
+--- TEST RESULT ---
+STATUS: TEST FAILED (Exit Code: 1)
+
+================================================================================
+================================================================================
+Test Execution Timestamp: 2025-12-30 14:56:36
+Environment Detected: WINDOWS
+Test Script: run_test.bat
+================================================================================
+
+--- STANDARD OUTPUT ---
+==========================================
+Running Linting Tests - Windows
+==========================================
+
+Warning: Virtual environment not found at venv\Scripts
+Running flake8 for PEP 8 compliance...
+[OK] flake8 passed
+
+Running pylint for code quality...
+[OK] pylint completed
+
+Checking code formatting with black...
+[OK] black formatting check passed
+
+==========================================
+Test Results: PASSED=4, FAILED=0
+==========================================
+TEST PASSED
+
+
+--- TEST RESULT ---
+STATUS: TEST PASSED
+
+================================================================================
