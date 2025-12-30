@@ -1,0 +1,2 @@
+class InventoryError(Exception):
+    pass
