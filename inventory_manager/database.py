@@ -1,4 +1,4 @@
-import sqlite3, os  # <- unused import os
+import sqlite3, os
 from inventory_manager.models import Product
 
 class InventoryDB:
