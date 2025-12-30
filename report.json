@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "total_vulnerabilities": 9,
+    "critical": 0,
+    "high": 0,
+    "medium": 3,
+    "low": 6
+  },
+  "details": [
+    {
+      "id": 1,
+      "file": "inventory_manager/main.py",
+      "line_numbers": [3],
+      "original": "from inventory_manager.utils import calculateTotal",
+      "updated": "from inventory_manager.utils import calculate_total",
+      "fix_explanation": "Renamed camelCase function to snake_case to comply with PEP8 and updated call sites."
+    },
+    {
+      "id": 2,
+      "file": "inventory_manager/main.py",
+      "line_numbers": [6, 13],
+      "original": "db=InventoryDB(\"inventory.db\")\n...\nprint(\"Total quantity:\",total_qty,\"Total value:\",total_value)",
+      "updated": "db = InventoryDB(DB_FILE)\n...\nprint(f\"Total quantity: {total_qty}  Total value: {total_value:.2f}\")",
+      "fix_explanation": "Fixed spacing, used f-strings, and switched to config constants for clarity and style."
+    },
+    {
+      "id": 3,
+      "file": "inventory_manager/utils.py",
+      "line_numbers": [1,2],
+      "original": "def calculateTotal(products):\n    total_qty=0\n    total_value=0\n    for p in products:\n        total_qty += p.qty\n        total_value += p.qty*p.price\n    return total_qty, total_value",
+      "updated": "def calculate_total(products: Iterable[object]) -> Tuple[int, float]:\n    \"\"\"Calculate total quantity and total value for an iterable of products.\"\"\"\n    total_qty = 0\n    total_value = 0.0\n    for p in products:\n        total_qty += p.qty\n        total_value += p.qty * p.price\n    return total_qty, total_value",
+      "fix_explanation": "Renamed function to snake_case and added type hints/docstring (PEP8/type-checking improvements)."
+    },
+    {
+      "id": 4,
+      "file": "inventory_manager/models.py",
+      "line_numbers": [2,5],
+      "original": "def __init__(self, id, name, qty, price):\n        self.id = id\n...\n    def __str__(self): return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "updated": "def __init__(self, product_id: int, name: str, qty: int, price: float) -> None:\n        self.id = product_id\n...\n    def __str__(self) -> str:\n        return f\"Product({self.id}, {self.name}, {self.qty}, {self.price})\"",
+      "fix_explanation": "Avoid shadowing builtin 'id', added type hints and expanded __str__ to its own line for readability."
+    },
+    {
+      "id": 5,
+      "file": "inventory_manager/database.py",
+      "line_numbers": [1,3,4],
+      "original": "import sqlite3, os\nfrom inventory_manager.models import Product\n...\n    def __init__(self, db_file):\n        self.conn=sqlite3.connect(db_file)\n        self.cur=self.conn.cursor()",
+      "updated": "import sqlite3\nfrom typing import List\nfrom inventory_manager.models import Product\n...\n    def __init__(self, db_file: str) -> None:\n        self.conn = sqlite3.connect(db_file)\n        self.cur = self.conn.cursor()",
+      "fix_explanation": "Removed unused import, fixed spacing, added type hints and resource cleanup (close/context manager support)."
+    },
+    {
+      "id": 6,
+      "file": "inventory_manager/database.py",
+      "line_numbers": [7,10],
+      "original": "def create_table(self):\n        self.cur.execute(\"CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY,name TEXT, qty INTEGER, price REAL)\")\n        self.conn.commit()",
+      "updated": "def create_table(self) -> None:\n        self.cur.execute(\""\"\n            CREATE TABLE IF NOT EXISTS products (\n                id INTEGER PRIMARY KEY,\n                name TEXT,\n                qty INTEGER,\n                price REAL\n            )\n            \""\")\n        self.conn.commit()",
+      "fix_explanation": "Formatted SQL for readability and added return type hints."
+    },
+    {
+      "id": 7,
+      "file": "inventory_manager/report.py",
+      "line_numbers": [1,2],
+      "original": "import pandas as pd\ndef export_report(products, filename): \n    df=pd.DataFrame([{'id':p.id,'name':p.name,'qty':p.qty,'price':p.price} for p in products])\n    df.to_excel(filename,index=False)",
+      "updated": "import pandas as pd\nfrom typing import Iterable\n\ndef export_report(products: Iterable[object], filename: str) -> None:\n    rows = [{\"id\": p.id, \"name\": p.name, \"qty\": p.qty, \"price\": p.price} for p in products]\n    df = pd.DataFrame(rows)\n    df.to_excel(filename, index=False)",
+      "fix_explanation": "Added type hints and docstring-like behavior, improved spacing for readability."
+    },
+    {
+      "id": 8,
+      "file": "inventory_manager/main.py",
+      "line_numbers": [1],
+      "original": "from inventory_manager.report import export_report",
+      "updated": "from inventory_manager.report import export_report\nfrom inventory_manager.config import DB_FILE, REPORT_FILE",
+      "fix_explanation": "Use configuration constants instead of hard-coded filenames."
+    },
+    {
+      "id": 9,
+      "file": "multiple files",
+      "line_numbers": [],
+      "original": "Various missing type hints/docstrings and one-line methods",
+      "updated": "Added type hints, docstrings, and expanded one-line methods across modules",
+      "fix_explanation": "General code-style improvements to satisfy linters and improve maintainability."
+    }
+  ]
+}
