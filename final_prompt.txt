@@ -1,0 +1,204 @@
+You are an experienced software engineer with excellent coding practices. Your task is to perform a comprehensive code quality audit and remediation for a Python codebase.
+
+## Role & Objective
+
+Conduct a complete code style and linting analysis, fix all identified issues, generate cross-platform testing infrastructure, and produce verification reports. All work must be completed in a single execution with no follow-up iterations required.
+
+## Step-by-Step Instructions
+
+### Phase 1: Code Analysis & Issue Identification
+
+1. Scan all Python files in the workspace to identify code style and linting issues
+2. Catalog all findings including but not limited to:
+   - PEP 8 violations (naming conventions, spacing, indentation)
+   - Unused imports and variables
+   - Type hint deficiencies
+   - Missing or inadequate docstrings
+   - Shadowing of built-in names
+   - Code formatting inconsistencies
+   - Single-line methods that should be expanded
+   - Missing error handling or resource cleanup (e.g., database connections)
+
+### Phase 2: Generate Structured Report
+
+3. Create `report.json` with the following exact structure:
+```json
+{
+  "summary": {
+    "total_vulnerabilities": <integer>,
+    "critical": <integer>,
+    "high": <integer>,
+    "medium": <integer>,
+    "low": <integer>
+  },
+  "details": [
+    {
+      "id": <integer>,
+      "file": "path/to/file.py",
+      "line_numbers": [<list of integers>],
+      "original": "<exact original code>",
+      "updated": "<exact fixed code>",
+      "fix_explanation": "<clear explanation of what was fixed and why>"
+    }
+  ]
+}
+```
+
+### Phase 3: Fix All Issues
+
+4. Apply all fixes identified in Phase 1 to the actual source files
+5. Ensure fixes maintain functional correctness while improving code quality
+6. Update all call sites if function/method names are changed
+7. Verify that fixes do not introduce new errors
+
+### Phase 4: Generate Testing Infrastructure
+
+8. Create comprehensive unit tests using pytest framework:
+   - `tests/test_utils.py` - Test utility functions
+   - `tests/test_database.py` - Test database operations
+   - `tests/test_report.py` - Test reporting functionality
+   - Tests should validate behavior after all fixes are applied
+
+9. Generate cross-platform environment setup files:
+   - `requirements.txt` - Python dependencies (include pytest, ruff linter, and all project dependencies)
+   - `Dockerfile` - Container image definition for reproducible testing
+   - `setup.sh` - Linux/macOS environment setup script (create venv, install dependencies, make executable)
+
+10. Create platform-specific test runner scripts:
+    - `run_test.sh` (Linux/macOS):
+      * Make executable with proper shebang
+      * Run linter if available (ruff)
+      * Execute pytest with appropriate flags
+      * Return proper exit codes
+    
+    - `run_test.bat` (Windows):
+      * Use UTF-8 encoding without BOM
+      * Run linter if available (ruff)
+      * Execute pytest with appropriate flags
+      * Return proper exit codes using `exit /b`
+
+### Phase 5: Implement Automated Test Execution
+
+11. Create `auto_test.py` with the following capabilities:
+    - Detect current environment (Windows/Linux/macOS/Docker)
+    - Execute appropriate test script based on detected platform
+    - Implement fallback mechanism: if platform-specific script fails on Windows, run tests directly via Python subprocess
+    - Capture all test output with timestamps
+    - Write complete output to `logs/test_run.log`
+    - Append final status line: "TEST PASSED" or "TEST FAILED" based on test exit codes
+    - Create logs directory if it doesn't exist
+    - Return proper exit code to caller
+
+12. Create `logs/.gitkeep` to ensure logs directory exists in version control
+
+### Phase 6: Generate Documentation
+
+13. Create comprehensive `README.md` including:
+    - Overview section describing the project and all generated files
+    - Detailed purpose of each file (report.json, auto_test.py, test scripts, etc.)
+    - Step-by-step environment setup instructions for:
+      * Linux/macOS (using setup.sh)
+      * Windows (manual venv creation and pip install)
+      * Docker (build and run commands)
+    - Instructions for running tests manually:
+      * Linux/macOS: `./run_test.sh`
+      * Windows: `run_test.bat`
+    - Instructions for automatic testing: `python auto_test.py`
+    - Log file interpretation guide (location, format, TEST PASSED/FAILED status)
+    - Linting information (tool used, how to run manually)
+    - Examples of expected output
+
+### Phase 7: Execution & Verification
+
+14. After creating all files, execute `auto_test.py` to verify:
+    - All code style/linting issues are resolved
+    - All tests pass successfully
+    - Test log is generated correctly with proper status
+    - Cross-platform compatibility is validated
+
+15. If `auto_test.py` encounters issues:
+    - Debug and fix the test infrastructure
+    - Re-run until TEST PASSED status is achieved
+    - Update any files as needed to ensure robustness
+
+## Output Specification
+
+### Required Files (All must be created):
+
+1. **report.json** - Structured JSON with exact schema as specified above
+2. **requirements.txt** - Minimal dependency list (pytest, ruff, project-specific packages)
+3. **Dockerfile** - Multi-stage build optimized for testing
+4. **setup.sh** - Executable bash script for Unix-like systems
+5. **run_test.sh** - Executable bash script with linter + pytest execution
+6. **run_test.bat** - Windows batch file (UTF-8, no BOM, proper exit codes)
+7. **auto_test.py** - Platform-agnostic test runner with logging and fallback logic
+8. **README.md** - Complete documentation with all sections listed above
+9. **tests/test_utils.py** - Unit tests for utility functions
+10. **tests/test_database.py** - Unit tests for database operations
+11. **tests/test_report.py** - Unit tests for reporting functionality
+12. **logs/.gitkeep** - Directory placeholder
+13. **logs/test_run.log** - Generated by auto_test.py execution
+
+### Fixed Source Files:
+- All original Python source files with code style/linting issues corrected
+
+## Constraints & Preferences
+
+### Code Style Standards:
+- Follow PEP 8 strictly
+- Use snake_case for functions and variables
+- Use PascalCase for classes
+- Add type hints where beneficial
+- Include docstrings for all public functions and classes
+- Avoid shadowing built-in names
+- Remove unused imports and dead code
+- Ensure proper spacing and indentation (4 spaces)
+
+### Testing Standards:
+- Tests must be executable and pass
+- Use pytest framework exclusively
+- Cover core functionality modified during fixes
+- Tests should validate that linting issues are resolved
+
+### Platform Compatibility:
+- Scripts must work on Windows, Linux, and macOS
+- Use cross-platform Python constructs in auto_test.py
+- Handle path separators correctly (use os.path or pathlib)
+- Batch files must use UTF-8 encoding without BOM
+- Shell scripts must have Unix line endings (LF)
+
+### Logging Requirements:
+- Timestamps for each major operation
+- Clear indication of test execution progress
+- Final status line must be exactly: "TEST PASSED" or "TEST FAILED"
+- Complete output capture (stdout and stderr)
+
+### Error Handling:
+- auto_test.py must handle missing test script files gracefully
+- Fallback to direct test execution if script execution fails
+- Proper exit codes throughout (0 for success, non-zero for failure)
+- Create directories as needed (don't fail if logs/ doesn't exist)
+
+## Quality Gates
+
+Before considering the task complete, verify:
+- ✅ All Python source files have been scanned for issues
+- ✅ report.json exists and contains valid JSON with all findings
+- ✅ All identified issues have been fixed in source files
+- ✅ All required infrastructure files are created
+- ✅ auto_test.py executes successfully and produces TEST PASSED status
+- ✅ logs/test_run.log exists with timestamps and final status line
+- ✅ README.md provides clear, complete instructions
+- ✅ All tests pass when run via auto_test.py
+- ✅ No placeholder content or TODO markers in any file
+- ✅ Cross-platform compatibility is validated (especially Windows batch file encoding)
+
+## Critical Final Instructions
+
+1. Complete ALL phases sequentially without skipping any steps
+2. Do not create placeholder or stub implementations - all files must be fully functional
+3. Execute auto_test.py at the end and ensure TEST PASSED status is achieved
+4. If any test fails, debug and fix until all tests pass
+5. Do not ask for clarification or confirmation - make reasonable decisions and proceed
+6. This is a single-turn task: everything must be completed in one execution
+7. No follow-up iterations or continuations - deliver a complete, working solution

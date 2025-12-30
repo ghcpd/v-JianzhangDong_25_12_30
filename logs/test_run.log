@@ -1,0 +1,15 @@
+2025-12-30T07:00:49.343283 - Environment detected: system=Windows, docker=False
+2025-12-30T07:00:49.426590 - 此时不应有 ...。
+2025-12-30T07:00:49.429270 - TEST FAILED
+2025-12-30T07:04:59.374807 - Environment detected: system=Windows, docker=False
+2025-12-30T07:04:59.443349 - 此时不应有 ...。
+2025-12-30T07:04:59.445530 - TEST FAILED
+2025-12-30T07:09:23.638005 - Environment detected: system=Windows, docker=False
+2025-12-30T07:09:23.708474 - 此时不应有 ...。
+2025-12-30T07:09:23.710470 - TEST FAILED
+2025-12-30T07:10:07.463207 - Environment detected: system=Windows, docker=False
+2025-12-30T07:10:07.538901 - 此时不应有 ...。
+2025-12-30T07:10:07.540892 - run_test.bat returned non-zero — falling back to direct commands
+2025-12-30T07:10:09.293985 - ....                                                                     [100%]
+2025-12-30T07:10:09.294973 - 4 passed in 1.04s
+2025-12-30T07:10:09.401102 - TEST PASSED
